@@ -8,7 +8,7 @@ services:
     volumes:
       - storedb:/var/lib/postgresql  # Crearemos un volumen para almacenar los datos de la db
     ports:                               
-      - "5432:5432"                     # Habilitamos el puerto 5432 (externo) para acceder a la db que está en la 5432 (contenedor)
+      - "5434:5432"                     # Habilitamos el puerto 5432 (externo) para acceder a la db que está en la 5432 (contenedor)
     environment:                        # Creamos las variables del usuario contraseña y base de datos 
       POSTGRES_USER: postgres              #   que se crea cuando inicia docker
       POSTGRES_PASSWORD: postgres
