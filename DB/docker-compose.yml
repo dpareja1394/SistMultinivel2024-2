@@ -1,0 +1,19 @@
+# Trabajaremos con la versión 3 docker
+version: '3.8'
+
+# Creamos los servicios
+services:
+  storedb:                                 # Creamos el servicios postgreslocal para identificar la imagen
+    image: postgres
+    volumes:
+      - storedb:/var/lib/postgresql  # Crearemos un volumen para almacenar los datos de la db
+    ports:                               
+      - "5432:5432"                     # Habilitamos el puerto 5432 (externo) para acceder a la db que está en la 5432 (contenedor)
+    environment:                        # Creamos las variables del usuario contraseña y base de datos 
+      POSTGRES_USER: postgres              #   que se crea cuando inicia docker
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgrs
+
+volumes:                                # Creamos y asignamos el volumen de docker
+  storedb:
+    driver: local
