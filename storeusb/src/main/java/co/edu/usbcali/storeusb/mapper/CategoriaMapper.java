@@ -2,6 +2,8 @@ package co.edu.usbcali.storeusb.mapper;
 
 import co.edu.usbcali.storeusb.domain.Categoria;
 import co.edu.usbcali.storeusb.dto.CategoriaDTO;
+import co.edu.usbcali.storeusb.dto.request.CreateCategoriaRequest;
+import co.edu.usbcali.storeusb.utils.Constants;
 
 import java.util.List;
 
@@ -32,6 +34,14 @@ public class CategoriaMapper {
 
     public static List<Categoria> dTOToDomainList(List<CategoriaDTO> categoriasDTO) {
         return categoriasDTO.stream().map(CategoriaMapper::dTOToDomain).toList();
+    }
+
+    public static Categoria createCategoriaRequestToDomain(CreateCategoriaRequest createCategoriaRequest) {
+        return Categoria.builder()
+                .nombre(createCategoriaRequest.getNombre().toUpperCase())
+                .descripcion(createCategoriaRequest.getDescripcion())
+                .estado(Constants.ESTADO_ACTIVO)
+                .build();
     }
 
 
