@@ -4,6 +4,8 @@ import java.util.List;
 
 import co.edu.usbcali.storeusb.domain.Producto;
 import co.edu.usbcali.storeusb.dto.ProductoDTO;
+import co.edu.usbcali.storeusb.dto.request.CreateProductoRequest;
+import co.edu.usbcali.storeusb.utils.Constants;
 
 public class ProductoMapper {
     public static ProductoDTO domainToDTO(Producto producto) {
@@ -38,5 +40,16 @@ public class ProductoMapper {
 
     public static List<Producto> dTOToDomainList(List<ProductoDTO> productosDTO) {
         return productosDTO.stream().map(ProductoMapper::dTOToDomain).toList();
+    }
+
+    public static Producto createProductoRequestToDomain(CreateProductoRequest createProductoRequest) {
+        return Producto.builder()
+                .referencia(createProductoRequest.getReferencia())
+                .nombre(createProductoRequest.getNombre())
+                .descripcion(createProductoRequest.getDescripcion())
+                .precioUnitario(createProductoRequest.getPrecioUnitario())
+                .unidadesDisponibles(createProductoRequest.getUnidadesDisponibles())
+                .estado(Constants.ESTADO_ACTIVO)
+                .build();
     }
 }
