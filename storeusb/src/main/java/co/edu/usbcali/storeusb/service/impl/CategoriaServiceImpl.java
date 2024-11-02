@@ -26,8 +26,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         }
 
         // Validar que el campo nombre no sea nulo ni sea vacío
-        if (createCategoriaRequest.getNombre() == null
-                || createCategoriaRequest.getNombre().equals("")) {
+        if (createCategoriaRequest.getNombre() == null || createCategoriaRequest.getNombre().equals("")) {
             throw new Exception("El nombre de la categoria es obligatorio");
         }
 
@@ -37,8 +36,7 @@ public class CategoriaServiceImpl implements CategoriaService {
         }
 
         // Descripción solo se valida si supera los 255 caracteres
-        if (createCategoriaRequest.getDescripcion() != null &&
-        createCategoriaRequest.getDescripcion().length() > 255) {
+        if (createCategoriaRequest.getDescripcion() != null && createCategoriaRequest.getDescripcion().length() > 255) {
             throw new Exception("La descripción de la Categoría no puede exceder los 255 caracteres");
         }
 
