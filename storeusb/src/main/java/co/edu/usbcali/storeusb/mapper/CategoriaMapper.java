@@ -3,7 +3,6 @@ package co.edu.usbcali.storeusb.mapper;
 import co.edu.usbcali.storeusb.domain.Categoria;
 import co.edu.usbcali.storeusb.dto.CategoriaDTO;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriaMapper {
