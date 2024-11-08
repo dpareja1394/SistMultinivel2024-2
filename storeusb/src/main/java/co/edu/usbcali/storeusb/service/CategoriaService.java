@@ -5,6 +5,6 @@ import co.edu.usbcali.storeusb.dto.request.CreateCategoriaRequest;
 
 public interface CategoriaService {
 
-    public CategoriaDTO crearCategoria(CreateCategoriaRequest createCategoriaRequest) throws Exception;
+    CategoriaDTO crearCategoria(CreateCategoriaRequest createCategoriaRequest) throws Exception;
 
 }

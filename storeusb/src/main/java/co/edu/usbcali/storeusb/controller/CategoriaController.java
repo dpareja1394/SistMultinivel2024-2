@@ -5,6 +5,7 @@ import co.edu.usbcali.storeusb.dto.request.CreateCategoriaRequest;
 import co.edu.usbcali.storeusb.mapper.CategoriaMapper;
 import co.edu.usbcali.storeusb.repository.CategoriaRepository;
 import co.edu.usbcali.storeusb.service.CategoriaService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class CategoriaController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<CategoriaDTO> crearCategoria(@RequestBody CreateCategoriaRequest createCategoriaRequest) throws Exception{
+    public ResponseEntity<CategoriaDTO> crearCategoria(@RequestBody @Valid CreateCategoriaRequest createCategoriaRequest) throws Exception{
         CategoriaDTO categoriaResponse =
                 categoriaService.crearCategoria(createCategoriaRequest);
         return ResponseEntity.ok(categoriaResponse);
