@@ -41,6 +41,7 @@ public class ProductoServiceImpl implements ProductoService {
         // Validar si ya existe esa referencia dentro de la Categoria
         Optional.ofNullable(productoRepository.existsByCategoriaIdAndReferenciaAndEstado(categoria.getId(),
                         createProductoRequest.getReferencia().toUpperCase(), Constants.ESTADO_ACTIVO))
+                .filter(exist -> exist)
                 .ifPresent(exists -> { throw new RuntimeException(String.format(
                         ProductoMessage.EXISTE_REFERENCIA_EN_CATEGORIA, createProductoRequest.getReferencia().toUpperCase(),
                         categoria.getId(), categoria.getNombre()));
