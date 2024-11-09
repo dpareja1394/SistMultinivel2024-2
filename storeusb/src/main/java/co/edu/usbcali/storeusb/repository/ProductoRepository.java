@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
     List<Producto> findAllByCategoriaId(Integer idCategoria);
+    Boolean existsByCategoriaIdAndReferenciaAndEstado(Integer idCategoria, String referencia, String estado);
 }

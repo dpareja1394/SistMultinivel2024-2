@@ -5,6 +5,9 @@ import co.edu.usbcali.storeusb.dto.request.CreateProductoRequest;
 import co.edu.usbcali.storeusb.mapper.ProductoMapper;
 import co.edu.usbcali.storeusb.repository.ProductoRepository;
 import co.edu.usbcali.storeusb.service.ProductoService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,10 +36,10 @@ public class ProductoController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<ProductoDTO> crearProducto(@RequestBody CreateProductoRequest createProductoRequest) throws Exception{
+    public ResponseEntity<ProductoDTO> crearProducto(@RequestBody @Valid CreateProductoRequest createProductoRequest) throws Exception{
         ProductoDTO productoResponse =
                 productoService.crearProducto(createProductoRequest);
-        return ResponseEntity.ok(productoResponse);
+        return new ResponseEntity<>(productoResponse, HttpStatus.CREATED);
     }
 
 }

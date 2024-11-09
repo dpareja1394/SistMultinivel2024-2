@@ -47,8 +47,8 @@ public class ProductoMapper {
 
     public static Producto createProductoRequestToDomain(CreateProductoRequest createProductoRequest) {
         return Producto.builder()
-                .referencia(createProductoRequest.getReferencia())
-                .nombre(createProductoRequest.getNombre())
+                .referencia(createProductoRequest.getReferencia().toUpperCase())
+                .nombre(createProductoRequest.getNombre().toUpperCase())
                 .descripcion(createProductoRequest.getDescripcion())
                 .precioUnitario(createProductoRequest.getPrecioUnitario())
                 .unidadesDisponibles(createProductoRequest.getUnidadesDisponibles())

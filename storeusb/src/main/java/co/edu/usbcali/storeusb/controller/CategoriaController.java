@@ -7,6 +7,7 @@ import co.edu.usbcali.storeusb.mapper.CategoriaMapper;
 import co.edu.usbcali.storeusb.repository.CategoriaRepository;
 import co.edu.usbcali.storeusb.service.CategoriaService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,7 +40,7 @@ public class CategoriaController {
     public ResponseEntity<CategoriaDTO> crearCategoria(@RequestBody @Valid CreateCategoriaRequest createCategoriaRequest) throws Exception{
         CategoriaDTO categoriaResponse =
                 categoriaService.crearCategoria(createCategoriaRequest);
-        return ResponseEntity.ok(categoriaResponse);
+        return new ResponseEntity<>(categoriaResponse, HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/get/{id}")
