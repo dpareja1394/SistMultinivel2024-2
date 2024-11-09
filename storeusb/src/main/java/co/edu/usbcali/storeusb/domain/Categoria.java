@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -27,4 +29,6 @@ public class Categoria {
     @Column(length = 1, nullable = false)
     private String estado;
 
+    @OneToMany(mappedBy = "categoria", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Producto> productos;
 }

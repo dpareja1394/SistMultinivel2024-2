@@ -22,12 +22,9 @@ import java.util.Optional;
 public class CategoriaServiceImpl implements CategoriaService {
 
     private final CategoriaRepository categoriaRepository;
-    private final ProductoRepository productoRepository;
 
-    public CategoriaServiceImpl(CategoriaRepository categoriaRepository,
-                                ProductoRepository productoRepository) {
+    public CategoriaServiceImpl(CategoriaRepository categoriaRepository) {
         this.categoriaRepository = categoriaRepository;
-        this.productoRepository = productoRepository;
     }
 
     @Override
@@ -60,13 +57,10 @@ public class CategoriaServiceImpl implements CategoriaService {
             throw new Exception(String.format(CategoriaMessage.NO_EXISTE_CATEGORIA_POR_ID, categoriaId));
         }
 
-        // Consultar los productos que pertenecen a esa categoría
-        List<Producto> productos = productoRepository.findAllByCategoriaId(categoriaId);
-
-
         // Mapear la respuesta de Categoría con los Productos
         List<ProductoResponseCategoriaConProductos> productosResponse =
-                ProductoMapper.domainToProductoResponseCategoriaConProductosList(productos);
+                ProductoMapper.domainToProductoResponseCategoriaConProductosList(
+                        categoriaOptional.get().getProductos());
 
         return CategoriaMapper.domainToCategoriaConProductos(categoriaOptional.get(),
                 productosResponse);
