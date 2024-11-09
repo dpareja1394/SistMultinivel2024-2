@@ -49,4 +49,16 @@ public class CategoriaController {
         CategoriaConProductos categoriaConProductos = categoriaService.consultarCategoriaConProductos(id);
         return ResponseEntity.ok(categoriaConProductos);
     }
+
+    @PutMapping("/inactivate/{id}")
+    public ResponseEntity<CategoriaDTO> inactivarCategoria(@PathVariable Integer id) throws Exception{
+        CategoriaDTO categoriaDTO = categoriaService.inactivarCategoria(id);
+        return ResponseEntity.ok(categoriaDTO);
+    }
+
+    @PutMapping("/activate/{id}")
+    public ResponseEntity<CategoriaDTO> activarCategoria(@PathVariable Integer id) throws Exception{
+        CategoriaDTO categoriaDTO = categoriaService.activarCategoria(id);
+        return ResponseEntity.ok(categoriaDTO);
+    }
 }

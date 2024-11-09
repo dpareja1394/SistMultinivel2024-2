@@ -11,6 +11,7 @@ import co.edu.usbcali.storeusb.repository.CategoriaRepository;
 import co.edu.usbcali.storeusb.service.CategoriaService;
 import co.edu.usbcali.storeusb.utils.Constants;
 import co.edu.usbcali.storeusb.utils.validation.CategoriaMessage;
+import org.apache.tomcat.util.bcel.Const;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,13 +52,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Transactional(readOnly = true)
     public CategoriaConProductos consultarCategoriaConProductos(Integer categoriaId) throws Exception {
         // Consultar la categoría y si no la encuentra, lanza excepcion
-        Categoria categoria =
-                categoriaRepository.findById(categoriaId)
-                        .orElseThrow(
-                                () -> new Exception(
-                                        String.format(CategoriaMessage.NO_EXISTE_CATEGORIA_POR_ID, categoriaId)
-                                )
-                        );
+        Categoria categoria = findById(categoriaId);
 
         // Mapear la respuesta de Categoría con los Productos
         List<ProductoResponseCategoriaConProductos> productosResponse =
@@ -66,6 +61,58 @@ public class CategoriaServiceImpl implements CategoriaService {
 
         return CategoriaMapper.domainToCategoriaConProductos(categoria,
                 productosResponse);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CategoriaDTO inactivarCategoria(Integer categoriaId) throws Exception {
+        // Consultar la categoría y si no la encuentra, lanza excepcion
+        Categoria categoria = findById(categoriaId);
+
+        if (categoria.getEstado().equals(Constants.ESTADO_INACTIVO)) {
+            throw new Exception(
+                    String.format(
+                            CategoriaMessage.CATEGORIA_SE_ENCUENTRA_EN_ESTADO,
+                            categoria.getId(), categoria.getNombre(),
+                            categoria.getEstado(), Constants.ESTADO_INACTIVO_DESCRIPCION
+                    )
+            );
+        }
+
+        categoria.setEstado(Constants.ESTADO_INACTIVO);
+        categoria = categoriaRepository.save(categoria);
+        return CategoriaMapper.domainToDTO(categoria);
+    }
+
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CategoriaDTO activarCategoria(Integer categoriaId) throws Exception {
+        Categoria categoria = findById(categoriaId);
+
+        if (categoria.getEstado().equals(Constants.ESTADO_ACTIVO)) {
+            throw new Exception(
+                    String.format(
+                            CategoriaMessage.CATEGORIA_SE_ENCUENTRA_EN_ESTADO,
+                            categoria.getId(), categoria.getNombre(),
+                            categoria.getEstado(), Constants.ESTADO_ACTIVO_DESCRIPCION
+                    )
+            );
+        }
+
+        categoria.setEstado(Constants.ESTADO_ACTIVO);
+        categoria = categoriaRepository.save(categoria);
+        return CategoriaMapper.domainToDTO(categoria);
+    }
+
+    @Transactional(readOnly = true)
+    protected Categoria findById(Integer id) throws Exception{
+        // Consultar la categoría y si no la encuentra, lanza excepcion
+        return categoriaRepository.findById(id)
+                .orElseThrow(
+                        () -> new Exception(
+                                String.format(CategoriaMessage.NO_EXISTE_CATEGORIA_POR_ID, id)
+                        )
+                );
     }
 
 }

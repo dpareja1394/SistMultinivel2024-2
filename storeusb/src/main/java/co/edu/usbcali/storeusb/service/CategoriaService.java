@@ -9,4 +9,8 @@ public interface CategoriaService {
     CategoriaDTO crearCategoria(CreateCategoriaRequest createCategoriaRequest) throws Exception;
 
     CategoriaConProductos consultarCategoriaConProductos(Integer categoriaId) throws Exception;
+
+    CategoriaDTO inactivarCategoria(Integer categoriaId) throws Exception;
+
+    CategoriaDTO activarCategoria(Integer categoriaId) throws Exception;
 }
