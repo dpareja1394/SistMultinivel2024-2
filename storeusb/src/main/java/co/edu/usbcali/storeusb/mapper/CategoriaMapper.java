@@ -3,6 +3,7 @@ package co.edu.usbcali.storeusb.mapper;
 import co.edu.usbcali.storeusb.domain.Categoria;
 import co.edu.usbcali.storeusb.dto.CategoriaDTO;
 import co.edu.usbcali.storeusb.dto.request.CreateCategoriaRequest;
+import co.edu.usbcali.storeusb.dto.request.UpdateCategoriaRequest;
 import co.edu.usbcali.storeusb.dto.response.CategoriaConProductos;
 import co.edu.usbcali.storeusb.dto.response.ProductoResponseCategoriaConProductos;
 import co.edu.usbcali.storeusb.utils.Constants;
@@ -53,6 +54,12 @@ public class CategoriaMapper {
                 .estado(categoria.getEstado())
                 .productos(productos)
                 .build();
+    }
+
+    public static Categoria updateCategoriaRequestToDomain(Categoria categoria, UpdateCategoriaRequest updateCategoriaRequest) {
+        categoria.setNombre(updateCategoriaRequest.getNombre().toUpperCase());
+        categoria.setDescripcion(updateCategoriaRequest.getDescripcion());
+        return categoria;
     }
 
 

@@ -3,6 +3,7 @@ package co.edu.usbcali.storeusb.service.impl;
 import co.edu.usbcali.storeusb.domain.Categoria;
 import co.edu.usbcali.storeusb.dto.CategoriaDTO;
 import co.edu.usbcali.storeusb.dto.request.CreateCategoriaRequest;
+import co.edu.usbcali.storeusb.dto.request.UpdateCategoriaRequest;
 import co.edu.usbcali.storeusb.dto.response.CategoriaConProductos;
 import co.edu.usbcali.storeusb.dto.response.ProductoResponseCategoriaConProductos;
 import co.edu.usbcali.storeusb.mapper.CategoriaMapper;
@@ -11,7 +12,6 @@ import co.edu.usbcali.storeusb.repository.CategoriaRepository;
 import co.edu.usbcali.storeusb.service.CategoriaService;
 import co.edu.usbcali.storeusb.utils.Constants;
 import co.edu.usbcali.storeusb.utils.validation.CategoriaMessage;
-import org.apache.tomcat.util.bcel.Const;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,8 +104,31 @@ public class CategoriaServiceImpl implements CategoriaService {
         return CategoriaMapper.domainToDTO(categoria);
     }
 
+    @Override
+    @Transactional(propagation = Propagation.REQUIRED)
+    public CategoriaDTO actualizarCategoria(Integer id, UpdateCategoriaRequest updateCategoriaRequest) throws Exception {
+        // Validar si existe la categoria por id
+        Categoria categoria = findById(id);
+
+        // Validar si ya existe una Categoria con el nombre y el estado, pero con otro id
+        if (categoriaRepository.existsByIdNotAndNombre(
+                id,
+                updateCategoriaRequest.getNombre().toUpperCase())) {
+            throw new Exception(
+                    String.format(
+                            CategoriaMessage.EXISTE_OTRA_CATEGORIA_POR_NOMBRE,
+                            updateCategoriaRequest.getNombre().toUpperCase()));
+        }
+
+        categoria = CategoriaMapper.updateCategoriaRequestToDomain(categoria, updateCategoriaRequest);
+
+        categoria = categoriaRepository.save(categoria);
+
+        return CategoriaMapper.domainToDTO(categoria);
+    }
+
     @Transactional(readOnly = true)
-    protected Categoria findById(Integer id) throws Exception{
+    protected Categoria findById(Integer id) throws Exception {
         // Consultar la categoría y si no la encuentra, lanza excepcion
         return categoriaRepository.findById(id)
                 .orElseThrow(

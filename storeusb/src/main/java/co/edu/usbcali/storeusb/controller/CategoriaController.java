@@ -2,6 +2,7 @@ package co.edu.usbcali.storeusb.controller;
 
 import co.edu.usbcali.storeusb.dto.CategoriaDTO;
 import co.edu.usbcali.storeusb.dto.request.CreateCategoriaRequest;
+import co.edu.usbcali.storeusb.dto.request.UpdateCategoriaRequest;
 import co.edu.usbcali.storeusb.dto.response.CategoriaConProductos;
 import co.edu.usbcali.storeusb.mapper.CategoriaMapper;
 import co.edu.usbcali.storeusb.repository.CategoriaRepository;
@@ -59,6 +60,13 @@ public class CategoriaController {
     @PutMapping("/activate/{id}")
     public ResponseEntity<CategoriaDTO> activarCategoria(@PathVariable Integer id) throws Exception{
         CategoriaDTO categoriaDTO = categoriaService.activarCategoria(id);
+        return ResponseEntity.ok(categoriaDTO);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<CategoriaDTO> updateCategoria(@PathVariable Integer id,
+                                                        @RequestBody @Valid UpdateCategoriaRequest updateCategoriaRequest) throws Exception{
+        CategoriaDTO categoriaDTO = categoriaService.actualizarCategoria(id, updateCategoriaRequest);
         return ResponseEntity.ok(categoriaDTO);
     }
 }

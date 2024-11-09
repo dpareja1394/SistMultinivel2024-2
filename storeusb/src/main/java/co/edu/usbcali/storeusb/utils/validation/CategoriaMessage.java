@@ -9,5 +9,6 @@ public class CategoriaMessage {
     public static final String VALIDACION_DESCRIPCION_CARACTERES = "La descripción no puede no puede superar los 255 caracteres";
     public static final String NO_EXISTE_CATEGORIA_POR_ID = "No se encontró la Categoría con Id: %d";
     public static final String CATEGORIA_SE_ENCUENTRA_EN_ESTADO = "La Categoria %d - %s se encuentra en estado %s - %s";
+    public static final String EXISTE_OTRA_CATEGORIA_POR_NOMBRE = "Ya existe una categoría con el nombre: %s";
 
 }
